@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 
 import User from "../models/UserModel.js";
-import Password from "../models/PasswordModel.js";
 
 // Handel errors
 const handelErrors = (err) => {
@@ -74,13 +73,15 @@ export const login = async (req, res) => {
     const token = createToken(user._id);
     // TODO: to secure cookie
     res.cookie("jwt", token, {
-      httpOnly: true,
+      // httpOnly: true,
       // secure: true,
       maxAge: maxAge * 1000,
     });
     res.status(200).json({ user });
   } catch (error) {
+    // console.log(error);
     const errors = handelErrors(error);
+    // console.log(errors)
     res.status(401).json({ errors });
   }
 };
